@@ -1,11 +1,9 @@
 FROM ubuntu:12.04
 
 RUN apt-get update
-RUN apt-get install -y wget ca-certificates
-
-# Install pip
-RUN cd /tmp; wget https://raw.github.com/pypa/pip/master/contrib/get-pip.py;\
- python get-pip.py; rm get-pip.py;
+RUN apt-get install -y wget ca-certificates python-dev \
+    libpq-dev libmysqlclient-dev python-setuptools
 
 # install py-mysql2pgsql 
-RUN pip install py-mysql2pgsql
+ADD . /build
+RUN cd /build && python setup.py install && rm -rf /build
